@@ -1,0 +1,63 @@
+=======================================================================
+User visible changes for pysol-sound-server
+=======================================================================
+
+Changes in 3.01 (18 Oct 2004)
+  * fixes for 64-bit systems
+  * upgraded to SDL 1.2.7
+
+Changes in 3.00 (24 Jun 2002)
+  * updated the protocol version
+  * upgraded to SDL 1.2.4
+
+Changes in 2.62 (17 Jan 2002)
+  * some improvements to setup.py.in
+  * added some test files (type `make test')
+
+Changes in 2.60 (16 Jan 2002)
+  * changed the build process to use Python's distutils
+  * upgraded to SDL 1.2.3
+
+Changes in 2.50 (03 Jul 2001)
+  * compile fixes for gcc 3.0
+  * upgraded to SDL 1.2.1
+  * upgraded to smpeg 0.4.4
+
+Changes in 2.40 (05 Mar 2001)
+  * upgraded to SDL 1.1.8
+  * upgraded to smpeg 0.4.2
+
+Changes in 2.30 (24 Oct 2000)
+  * updated the protocol version
+  * upgraded to SDL 1.1.6
+  * upgraded to smpeg 0.4.1
+
+Changes in 2.20 (28 May 2000)
+  * upgraded to SDL 1.1.2
+  * upgraded to smpeg 0.3.5
+  * upgraded to libmikmod 3.1.9
+
+Changes in 2.10 (08 Feb 2000)
+  * updated the protocol version
+  * upgraded to SDL 1.0.4
+
+Changes in 2.01 (01 Feb 2000)
+  * fixed a possible buffer overrun with looped samples
+
+Changes in 2.00 (26 Jan 2000)
+  * pysolsoundserver now builds as a Python extension module
+  * upgraded to SDL 1.0.3
+
+Changes in 1.10 (22 Jan 2000)
+  * updated the protocol version to support filenames with spaces
+
+Changes in 1.02 (21 Jan 2000)
+  * upgraded to SDL 1.0.2 and smpeg 0.3.3
+
+Changes in 1.01 (18 Jan 2000)
+  * added Win32 port
+  * fixed a shutdown problem when the music volume was set to zero
+
+Changes in 1.00 (21 Dec 1999)
+  * first public release
+

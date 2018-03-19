@@ -1,0 +1,83 @@
+
+                           PySol-Sound-Server
+                              Version 3.01
+
+             Copyright (C) Markus F.X.J. Oberhumer and others
+                         <markus@oberhumer.com>
+
+
+What is PySol ?
+===============
+
+PySol is an exciting collection of more than 200 distinct solitaire
+card games - visit the PySol home page for more information:
+
+    http://www.oberhumer.com/opensource/pysol/
+
+
+What is PySol-Sound-Server ?
+============================
+
+A Python extension module that plays WAV samples together with MP3
+or MOD background music.
+
+PySol-Sound-Server should work under any platform that is supported by the
+SDL library, but currently only Linux, FreeBSD and Win32 have been tested.
+
+
+Prerequisites
+=============
+
+[ Note: Linux users should download a special semi-static precompiled
+  module from the PySol homepage to avoid the installation of any
+  additional packages mentioned here. Also see src/setup.py.in for
+  instructions how to build this special module from source. ]
+
+First you will need to install the Python development headers
+and libraries.
+
+Then you will need to install the SDL and the SDL-MPEG (smpeg)
+libraries, which are both freely available under the GNU LGPL:
+
+   SDL 1.2.7        http://www.libsdl.org/
+   smpeg 0.4.4      http://www.lokigames.com/development/smpeg.php3
+   smpeg 0.4.x      http://icculus.org/smpeg/
+
+
+How do I build the server ?
+===========================
+
+$ cd src
+$ ./configure
+$ make
+$ make strip  [optional]
+$ make test
+$ make install
+
+
+Copyright
+=========
+
+PySol-Sound-Server is Copyright (C) 1999, 2000, 2001, 2002, 2003, 2004
+Markus Franz Xaver Johannes Oberhumer <markus@oberhumer.com>
+
+PySol-Sound-Server is distributed under the terms of the GNU
+General Public License (GPL). See the file COPYING.
+
+PySol-Sound-Server includes modified portions of the MikMod and
+SDL_mixer libraries (which are both also available separately
+under the terms of the GNU LGPL).
+
+
+Thanks
+======
+
+Special thanks to Sam Lantinga and the other people at Loki - Unix gaming
+wouldn't be what it is today without their ongoing efforts.
+
+
+Have fun,
+Markus
+
+http://www.oberhumer.com
+

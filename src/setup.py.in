@@ -1,0 +1,184 @@
+#! /usr/bin/env python
+## -*- coding: iso-8859-1 -*-
+## vi:ts=4:et
+##
+##---------------------------------------------------------------------------##
+##  Author:
+##      Markus F.X.J. Oberhumer <markus@oberhumer.com>
+##  Copyright:
+##      Distributed under the terms of the GNU General Public License.
+##---------------------------------------------------------------------------##
+
+
+##### start of configure section #####
+
+SDL_VERSION = """@SDL_VERSION@"""
+SDL_CFLAGS = """@SDL_CFLAGS@"""
+SDL_LIBS = """@SDL_LIBS@"""
+SMPEG_CFLAGS = """@SMPEG_CFLAGS@"""
+SMPEG_LIBS = """@SMPEG_LIBS@"""
+
+##### end of configure section #####
+
+
+import glob, os, re, sys, string
+import distutils
+from distutils.core import setup
+from distutils.extension import Extension
+from distutils.util import split_quoted
+from distutils.version import LooseVersion
+
+from version import *
+
+
+sources = []
+for dir in ("", "mixer", "mikmod",):
+    files = glob.glob(os.path.join(dir, "*.c"))
+    files.sort()
+    sources.extend(files)
+include_dirs = [os.curdir, "mikmod",]
+define_macros = []
+undef_macros = []
+library_dirs = []
+libraries = []
+runtime_library_dirs = []
+extra_objects = []
+extra_compile_args = []
+extra_link_args = []
+
+def add_flags(flags, extra):
+    if not flags:
+        return
+    if flags[:1] == "@" and flags[-1:] == "@":  # not substituted
+        return
+    append_next = None
+    for f in split_quoted(flags):
+        if append_next is not None:
+            if last_f is not None:
+                append_next.append(last_f)
+            append_next.append(f)
+            append_next = None
+            continue
+        last_f = f
+        s, v = f[:2], f[2:]
+        if s == "-I" and v:
+            # do not add /usr/include
+            if not re.search(r"^\/+usr\/+include\/*$", v):
+                include_dirs.append(v)
+        elif s == "-D" and v:
+            n = string.find(v, "=")
+            if n < 0:
+                define_macros.append((v, None))
+            else:
+                define_macros.append((v[:n], v[n+1:]))
+        elif s == "-U" and v:
+            undef_macros.append(v)
+        elif s == "-L" and v:
+            library_dirs.append(v)
+        elif s == "-l" and v:
+            libraries.append(v)
+        elif s == "-R" and v:
+            runtime_library_dirs.append(v)
+        elif f == "-rpath":
+            append_next = runtime_library_dirs
+            last_f = None
+        elif f == "-Xlinker":
+            append_next = extra_link_args
+        elif s == "-u":
+            if v:
+                extra.append(f)
+            else:
+                append_next = extra
+        else:
+            ##raise Exception, "unknown flag " + f
+            print "WARNING: unknown compiler option " + f
+            extra.append(f)
+
+for flags in (SDL_CFLAGS, SMPEG_CFLAGS,):
+    add_flags(flags, extra_compile_args)
+for flags in (SDL_LIBS, SMPEG_LIBS,):
+    add_flags(flags, extra_link_args)
+
+
+if "--semi-static" in sys.argv:
+    sys.argv.remove("--semi-static")
+    #
+    #   HOW TO BUILD THE SEMI-STATIC MODULE:
+    #   ------------------------------------
+    #
+    #   A) install the Python development package
+    #
+    #   B) build or install static libraries of current versions of
+    #      libaudiofile, libesd, SDL and smpeg
+    #      (distributions like Debian have packages for all of these)
+    #
+    #   C) build your own stripped down SDL 1.2.7 library from source
+    #     1) configure SDL with `--disable-shared --disable-arts --disable-video
+    #          --disable-events --disable-cdrom --disable-joystick'
+    #     2) build SDL
+    #     3) copy the resulting library src/.libs/libSDL.a to
+    #        /usr/local/lib/libSDL-1.2.7-disable_video.a
+    #
+    #   D) build the semi-static pysolsoundserver module
+    #     1) run `./configure'
+    #     2) type `make static'
+    #     3) type `make strip' (optional)
+    #     4) type `make install'
+    #
+    define_macros.append(("STATIC_SDL", None))
+    define_macros.append(("DISABLE_VIDEO", None))
+    libraries = [
+        "pthread",
+    ]
+    extra_objects = [
+        "/usr/local/lib/libSDL-1.2.7-disable_video.a",
+        "/usr/lib/libsmpeg.a",
+        "/usr/lib/libasound.a",
+        "/usr/lib/libaudiofile.a",
+        "/usr/lib/libesd.a",
+    ]
+
+
+def get_kw(**kw): return kw
+
+ext = Extension(
+    name="pysolsoundserver",
+    sources=sources,
+    include_dirs=include_dirs,
+    define_macros=define_macros,
+    undef_macros=undef_macros,
+    library_dirs=library_dirs,
+    libraries=libraries,
+    runtime_library_dirs=runtime_library_dirs,
+    extra_objects=extra_objects,
+    extra_compile_args=extra_compile_args,
+    extra_link_args=extra_link_args,
+)
+
+##print ext.__dict__; sys.exit()
+
+setup_args = get_kw(
+    name="pysolsoundserver",
+    version=VERSION,
+    description="PySol sound server",
+    author="Markus F.X.J. Oberhumer",
+    author_email="markus@oberhumer.com",
+    url="http://www.oberhumer.com/opensource/pysol/",
+    license="GNU General Public License (GPL)",
+    ext_modules=[ext,],
+)
+
+
+
+##print distutils.__version__
+if LooseVersion(distutils.__version__) > LooseVersion("1.0.1"):
+    setup_args["platforms"] = "All"
+if LooseVersion(distutils.__version__) < LooseVersion("1.0.3"):
+    setup_args["licence"] = setup_args["license"]
+
+if __name__ == "__main__":
+    for o in ext.extra_objects:
+        assert os.path.isfile(o), o
+    apply(setup, (), setup_args)
+    sys.exit(0)
+

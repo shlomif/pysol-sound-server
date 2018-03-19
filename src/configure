@@ -1,0 +1,34 @@
+#! /bin/sh
+set -e
+##
+## vi:ts=4:et
+##
+##---------------------------------------------------------------------------##
+##  Author:
+##      Markus F.X.J. Oberhumer <markus@oberhumer.com>
+##  Copyright:
+##      Distributed under the terms of the GNU General Public License.
+##  Description:
+##      simple pseudo-configure
+##---------------------------------------------------------------------------##
+
+if test -z "$SDL_CONFIG"; then
+    SDL_CONFIG="sdl-config"
+fi
+SDL_VERSION=`"$SDL_CONFIG" --version`
+SDL_CFLAGS=`"$SDL_CONFIG" --cflags`
+SDL_LIBS=`"$SDL_CONFIG" --libs`
+
+SMPEG_CFLAGS=""
+SMPEG_LIBS="-lsmpeg"
+
+sed -e "s|@SDL_VERSION@|$SDL_VERSION|g" -e "s|@SDL_CFLAGS@|$SDL_CFLAGS|g" -e "s|@SDL_LIBS@|$SDL_LIBS|g" -e "s|@SMPEG_CFLAGS@|$SMPEG_CFLAGS|g" -e "s|@SMPEG_LIBS@|$SMPEG_LIBS|g" < setup.py.in > setup.py
+##chmod +x setup.py
+
+echo
+echo "Created setup.py."
+echo "Configuration finished."
+echo "Now type \"make\". Edit the file \`setup.py' in case of troubles."
+echo
+
+exit 0

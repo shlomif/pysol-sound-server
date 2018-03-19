@@ -1,0 +1,4 @@
+#define VERSION "3.01"
+#define VERSION_DATE "18 Oct 2004"
+#define VERSION_MAJOR 3
+#define VERSION_MINOR 1

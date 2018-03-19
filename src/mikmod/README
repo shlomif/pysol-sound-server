@@ -1,0 +1,14 @@
+
+ --> MikMod Sound Libraries Version 3.1.9
+ --> libmikmod 3.1.9 was released on 02/14/2000.
+
+--
+This version of the library is based on the official UNIX MikMod
+library version 3.1.9, found at:  http://mikmod.darkorb.net/
+
+It has been stripped down for inclusion with Simple DirectMedia Layer,
+but the missing drivers and file loaders can be plugged right in from
+the MikMod 3.1.9 archive.
+
+See COPYING.LESSER for copying information
+--
