@@ -66,7 +66,7 @@ def add_flags(flags, extra):
             if not re.search(r"^\/+usr\/+include\/*$", v):
                 include_dirs.append(v)
         elif s == "-D" and v:
-            n = string.find(v, "=")
+            n = v.find("=")
             if n < 0:
                 define_macros.append((v, None))
             else:
@@ -91,7 +91,7 @@ def add_flags(flags, extra):
                 append_next = extra
         else:
             ##raise Exception, "unknown flag " + f
-            print "WARNING: unknown compiler option " + f
+            print("WARNING: unknown compiler option " + f)
             extra.append(f)
 
 for flags in (SDL_CFLAGS, SMPEG_CFLAGS,):
@@ -179,6 +179,6 @@ if LooseVersion(distutils.__version__) < LooseVersion("1.0.3"):
 if __name__ == "__main__":
     for o in ext.extra_objects:
         assert os.path.isfile(o), o
-    apply(setup, (), setup_args)
+    setup(**setup_args)
     sys.exit(0)
 
