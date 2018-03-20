@@ -199,7 +199,11 @@ extern "C"
 #endif
 DL_EXPORT(void)
 #endif
+#if PY_MAJOR_VERSION >= 3
+PyInit_pysolsoundserver(void)
+#else
 initpysolsoundserver(void)
+#endif
 {
     PyObject *m, *d, *v;
 
@@ -240,6 +244,9 @@ static struct PyModuleDef soundservermod = {
     Py_DECREF(v);
 
     err = debug ? stderr : (FILE *) 0;
+#if PY_MAJOR_VERSION >= 3
+    return m;
+#endif
 }
 
 

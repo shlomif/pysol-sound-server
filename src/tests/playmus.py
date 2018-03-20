@@ -41,7 +41,7 @@
 # Play all MOD and MP3 files given on the commandline
 #
 
-import sys, os, time, getopt, thread
+import sys, os, time, getopt
 
 # update sys.path when running in the build directory
 from util import get_sys_path
@@ -57,7 +57,7 @@ import pysolsoundserver
 
 opts, files = getopt.getopt(sys.argv[1:], "l")
 if not files:
-    print "Usage: playmus.py [-l] MOD-or-MP3-file..."
+    print( "Usage: playmus.py [-l] MOD-or-MP3-file..." )
     sys.exit(1)
 priority = 0
 loop = ("-l", "") in opts
@@ -69,17 +69,17 @@ volume = 128
 #
 
 p = pysolsoundserver
-##print p.__dict__
-print p.__version__, p.__date__, p.__file__
+##print( p.__dict__ )
+print(p.__version__, p.__date__, p.__file__)
 r = p.init()
 if r:
-    print "init:", r
+    print( "init:", r )
 else:
-    print "init() failed:", r
+    print( "init() failed:", r )
     sys.exit(1)
 r = p.cmd("protocol 6")
 if r != 0:
-    print "protocol failed:", r
+    print( "protocol failed:", r )
     sys.exit(1)
 ##p.cmd("debug 3")
 
@@ -96,7 +96,7 @@ for file in files:
         playlist[id] = file
         id = id + 1
     else:
-        print "not a plain file -- skipping:", file
+        print( "not a plain file -- skipping:", file )
 
 
 #
@@ -108,10 +108,10 @@ last_id = -1
 while 1:
     id = p.getMusicInfo()
     if id < 0:
-        print "Done."
+        print( "Done." )
         break
     if id != last_id:
-        print "Playing %s" % (playlist.get(id))
+        print( "Playing %s" % (playlist.get(id)) )
         last_id = id
     time.sleep(1)
 
