@@ -2,6 +2,9 @@
 User visible changes for pysol-sound-server
 =======================================================================
 
+Changes in 3.10 (20 Mar 2018)
+  * Python 3 (and Python 2.7.x) compatibility
+
 Changes in 3.01 (18 Oct 2004)
   * fixes for 64-bit systems
   * upgraded to SDL 1.2.7

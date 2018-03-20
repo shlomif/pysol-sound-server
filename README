@@ -1,18 +1,18 @@
 
-                           PySol-Sound-Server
-                              Version 3.01
+                           PySol-Sound-Server (Maintenance fork)
+                              Version 3.10
 
              Copyright (C) Markus F.X.J. Oberhumer and others
                          <markus@oberhumer.com>
 
 
-What is PySol ?
+What is PySol FC?
 ===============
 
-PySol is an exciting collection of more than 200 distinct solitaire
-card games - visit the PySol home page for more information:
+PySol FC is an exciting collection of more than 1000 distinct solitaire
+card games - visit its home page for more information:
 
-    http://www.oberhumer.com/opensource/pysol/
+    http://pysolfc.sourceforge.net/
 
 
 What is PySol-Sound-Server ?
@@ -49,10 +49,11 @@ How do I build the server ?
 
 $ cd src
 $ ./configure
-$ make
-$ make strip  [optional]
-$ make test
-$ make install
+# Possibly python2 instead
+$ make PYTHON=python3
+$ make PYTHON=python3 strip  [optional]
+$ make PYTHON=python3 test
+$ make PYTHON=python3 install
 
 
 Copyright
@@ -75,9 +76,11 @@ Thanks
 Special thanks to Sam Lantinga and the other people at Loki - Unix gaming
 wouldn't be what it is today without their ongoing efforts.
 
+Thanks to Markus Oberhumer for originating this and PySol .
+Thanks to https://github.com/rezso for requesting this to be updated to
+Python3 and reporting remaining problems.
 
 Have fun,
-Markus
+Shlomi
 
-http://www.oberhumer.com
-
+http://www.shlomifish.org/
