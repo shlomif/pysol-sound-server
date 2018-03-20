@@ -36,6 +36,11 @@
 #include <unistd.h>
 #endif
 
+#if PY_MAJOR_VERSION >= 3
+#define PyString_FromString(s) PyBytes_FromString(s)
+#define PyInt_FromLong(l) PyLong_FromLong(l)
+#endif
+
 #include "SDL.h"
 #include "SDL_mutex.h"
 #include "SDL_thread.h"
@@ -198,8 +203,21 @@ initpysolsoundserver(void)
 {
     PyObject *m, *d, *v;
 
+#if PY_MAJOR_VERSION >= 3
+static struct PyModuleDef soundservermod = {
+    PyModuleDef_HEAD_INIT,
+    "pysolsoundserver",   /* name of module */
+    NULL, /* module documentation, may be NULL */
+    -1,       /* size of per-interpreter state of the module,
+                 or -1 if the module keeps state in global variables. */
+    methods
+};
+    m =PyModule_Create(&soundservermod);
+#else
     m = Py_InitModule4("pysolsoundserver", methods, NULL,
                        NULL, PYTHON_API_VERSION);
+#endif
+
     d = PyModule_GetDict(m);
 
     error = PyErr_NewException("pysolsoundserver.error", NULL, NULL);
