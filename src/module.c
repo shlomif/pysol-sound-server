@@ -45,7 +45,7 @@
 #include "SDL_mutex.h"
 #include "SDL_thread.h"
 
-#include "mixer.h"
+#include "SDL_mixer.h"
 #include "server.h"
 
 
@@ -114,15 +114,14 @@ do_init(PyObject *self, PyObject *args)
     Mix_HookMusicFinished(music_handle_queue);
 
     /* return some info */
-    if (Mix_GetMixerInfo(&audio_mixer, audio_name, sizeof(audio_name)) == 0)
-        r = PyTuple_New(5);
+    r = PyTuple_New(5);
     if (r != NULL)
     {
-        PyTuple_SET_ITEM(r, 0, PyString_FromString(audio_name));
-        PyTuple_SET_ITEM(r, 1, PyInt_FromLong(audio_mixer.format & 0xff));
-        PyTuple_SET_ITEM(r, 2, PyString_FromString((audio_mixer.format & 0x8000) ? "signed" : "unsigned"));
-        PyTuple_SET_ITEM(r, 3, PyInt_FromLong(audio_mixer.channels));
-        PyTuple_SET_ITEM(r, 4, PyInt_FromLong(audio_mixer.freq));
+        PyTuple_SET_ITEM(r, 0, PyString_FromString("name"));
+        PyTuple_SET_ITEM(r, 1, PyInt_FromLong(0));
+        PyTuple_SET_ITEM(r, 2, PyString_FromString((0) ? "signed" : "unsigned"));
+        PyTuple_SET_ITEM(r, 3, PyInt_FromLong(2));
+        PyTuple_SET_ITEM(r, 4, PyInt_FromLong(44100));
     }
     else
     {

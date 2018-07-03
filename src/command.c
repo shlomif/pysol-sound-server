@@ -44,8 +44,7 @@
 #include "SDL.h"
 #include "SDL_mutex.h"
 #include "SDL_thread.h"
-
-#include "mixer.h"
+#include "SDL_mixer.h"
 #include "server.h"
 
 
