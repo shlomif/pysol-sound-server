@@ -1,4 +1,4 @@
-#define VERSION "3.10"
-#define VERSION_DATE "19 Mar 2018"
+#define VERSION "3.20"
+#define VERSION_DATE "14 Jul 2018"
 #define VERSION_MAJOR 3
-#define VERSION_MINOR 10
+#define VERSION_MINOR 20
